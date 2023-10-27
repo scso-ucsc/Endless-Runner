@@ -5,9 +5,11 @@
 
 let config = {
     type: Phaser.CANVAS,
-    width: 800,
-    height: 450,
-    scene: [Menu, Play] //Defining scenes
+    width: 1000,
+    height: 650,
+    scene: [ Menu, Play ] //Defining scenes
 };
+
+console.log("Hello, world!");
 
 let game = new Phaser.Game(config); //Creating Game
