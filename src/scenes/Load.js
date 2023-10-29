@@ -18,6 +18,14 @@ class Load extends Phaser.Scene {
 
         //Loading images
         this.load.image("grid", "./assets/grid.png"); //Background
+        this.load.image("heartLive", "./assets/heart_live.png");
+        this.load.image("heartDead", "./assets/heart_dead.png");
+
+        //Loading spritesheets
+        this.load.spritesheet("drone", "./assets/drone.png", {
+            frameWidth: 100,
+            frameHeight: 80
+        });
     }
 
     create() {

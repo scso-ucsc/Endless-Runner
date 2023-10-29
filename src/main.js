@@ -1,6 +1,6 @@
 //Name: Sean Eric So
 //Game Title: Endless Runner
-//Time it took to complete project: 2 hours
+//Time it took to complete project: 5 hours
 //Creative Tilt:
 
 let config = {
@@ -23,4 +23,9 @@ let game = new Phaser.Game(config); //Creating Game
 //Creating variables
 let BORDER_WIDTH = 50;
 let BORDER_HEIGHT = 50;
-let playerScore = 100;
+let playerScore = 0;
+let highScore = 0;
+let playerLife = 3;
+
+//Enabling keyboard variables
+let keyLEFT, keyRIGHT;
