@@ -1,15 +1,26 @@
 //Name: Sean Eric So
 //Game Title: Endless Runner
-//Time it took to complete project: 1 hours
+//Time it took to complete project: 2 hours
 //Creative Tilt:
 
 let config = {
     type: Phaser.CANVAS,
     width: 1000,
     height: 650,
-    scene: [ Menu, Play ] //Defining scenes
+    scene: [ Load, Menu, Play ], //Defining scenes
+    physics: {
+        default: "arcade",
+        arcade: {
+            debug: true
+        }
+    }
 };
 
-console.log("Hello, world!");
+//console.log("Hello, world!");
 
 let game = new Phaser.Game(config); //Creating Game
+
+//Creating variables
+let BORDER_WIDTH = 50;
+let BORDER_HEIGHT = 50;
+let playerScore = 100;
