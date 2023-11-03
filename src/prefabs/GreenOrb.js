@@ -11,7 +11,7 @@ class GreenOrb extends Phaser.Physics.Arcade.Sprite{
 
         this.play("greenOrbIdle");
         this.setVelocityY(300);
-        this.setImmovable(true);
+        //this.setImmovable(true);
 
         this.newGreenOrb = true;
     }
@@ -28,5 +28,15 @@ class GreenOrb extends Phaser.Physics.Arcade.Sprite{
         if(this.y > game.config.height + blueGreenOrbRadius){
             this.destroy();
         }
+    }
+
+    absorb(){
+        this.destroy();
+        playerLife = 3;
+        var randomTime = Phaser.Math.Between(15, 20);
+        this.parentScene.time.delayedCall(randomTime * 1000, () => { //Spawn a new green orb after a random amount of seconds
+            this.parentScene.addGreenOrb(this.parent);
+        });
+        this.newGreenOrb = false;
     }
 }

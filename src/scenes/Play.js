@@ -9,9 +9,9 @@ class Play extends Phaser.Scene {
 
         //Making background
         this.grid = this.add.tileSprite(0, 0, game.config.width, game.config.height, "grid").setOrigin(0, 0); //Background
-        let UI = this.add.rectangle(0, 0, game.config.width, BORDER_HEIGHT + 20, 0xDFDFDF, 0.8).setOrigin(0, 0); //UI
-        let barrierL = this.add.rectangle(0, 0, BORDER_WIDTH, game.config.height, 0x333333).setOrigin(0, 0); //Side Walls
-        let barrierR = this.add.rectangle(game.config.width - BORDER_WIDTH, 0, BORDER_WIDTH, game.config.height, 0x333333).setOrigin(0, 0);
+        let UI = this.add.rectangle(0, 0, game.config.width, BORDER_HEIGHT + 20, 0xDFDFDF, 0.8).setOrigin(0, 0).setDepth(5); //UI
+        let barrierL = this.add.rectangle(0, 0, BORDER_WIDTH, game.config.height, 0x333333).setOrigin(0, 0).setDepth(6); //Side Walls
+        let barrierR = this.add.rectangle(game.config.width - BORDER_WIDTH, 0, BORDER_WIDTH, game.config.height, 0x333333).setOrigin(0, 0).setDepth(6);
 
         //Configuring Animations
         this.anims.create({
@@ -50,19 +50,21 @@ class Play extends Phaser.Scene {
         this.p1Drone.play("droneFly");
 
         //Adding Groups
-        this.laserGroup = new LaserGroup(this); //Laser Group
+        this.laserGroup = this.add.group({ //Laser Group
+            runChildUpdate: true
+        });
         this.redOrbGroup = this.add.group({
             runChildUpdate: true //Enables running on children objects
-        }).setDepth(1);
+        }).setDepth(2);
         this.blueOrbGroup = this.add.group({
             runChildUpdate: true
-        });
+        }).setDepth(3);
         this.orangeOrbGroup = this.add.group({
             runChildUpdate: true
-        });
+        }).setDepth(1);
         this.greenOrbGroup = this.add.group({
             runChildUpdate: true
-        });
+        }).setDepth(4);
 
         //Spawning first obstacles
         this.time.delayedCall(2500, () => { //Spawning first red orb after 2.5 seconds
@@ -98,40 +100,81 @@ class Play extends Phaser.Scene {
             color: "#000000",
             align: "middle"
         };
-        this.scoreText = this.add.text(game.config.width / 2, 28, playerScore, scoreTextConfig).setOrigin(0.5).setDepth(5);
+        this.scoreText = this.add.text(game.config.width / 2, 28, playerScore, scoreTextConfig).setOrigin(0.5).setDepth(6);
         scoreTextConfig.fontSize = "14px";
-        this.highScoreText = this.add.text(game.config.width / 2, 60, "Best: " + highScore, scoreTextConfig).setOrigin(0.5);
+        this.highScoreText = this.add.text(game.config.width / 2, 60, "Best: " + highScore, scoreTextConfig).setOrigin(0.5).setDepth(6);
         scoreTextConfig.fontSize = "60px";
         scoreTextConfig.color = "#006633";
         scoreTextConfig.align = "right";
-        this.ammoText = this.add.text(game.config.width - BORDER_WIDTH - 65, 40, "x " + bulletCount, scoreTextConfig).setOrigin(0.5);
+        this.ammoText = this.add.text(game.config.width - BORDER_WIDTH - 65, 40, "x " + bulletCount, scoreTextConfig).setOrigin(0.5).setDepth(6);
 
-        this.ammoIcon = this.add.sprite(game.config.width - BORDER_WIDTH - 140, 40, "laser").setOrigin(0.5); //Laser Icon
+        this.ammoIcon = this.add.sprite(game.config.width - BORDER_WIDTH - 140, 40, "laser").setOrigin(0.5).setDepth(6); //Laser Icon
 
-        this.heartDead1 = this.add.sprite(BORDER_WIDTH + 10, 10, "heartDead").setOrigin(0, 0); //Dead Hearts
-        this.heartDead2 = this.add.sprite(BORDER_WIDTH + 70, 10, "heartDead").setOrigin(0, 0);
-        this.heartDead3 = this.add.sprite(BORDER_WIDTH + 130, 10, "heartDead").setOrigin(0, 0);
+        this.heartDead1 = this.add.sprite(BORDER_WIDTH + 10, 10, "heartDead").setOrigin(0, 0).setDepth(6); //Dead Hearts
+        this.heartDead2 = this.add.sprite(BORDER_WIDTH + 70, 10, "heartDead").setOrigin(0, 0).setDepth(6);
+        this.heartDead3 = this.add.sprite(BORDER_WIDTH + 130, 10, "heartDead").setOrigin(0, 0).setDepth(6);
 
-        this.heartLive1 = new LiveHeart(this, BORDER_WIDTH + 10, 10, "heartLive").setOrigin(0, 0); //Live Hearts on top of the Dead ones to similar what is currently there
-        this.heartLive2 = new LiveHeart(this, BORDER_WIDTH + 70, 10, "heartLive").setOrigin(0, 0);
-        this.heartLive3 = new LiveHeart(this, BORDER_WIDTH + 130, 10, "heartLive").setOrigin(0, 0);
+        this.heartLive1 = new LiveHeart(this, BORDER_WIDTH + 10, 10, "heartLive").setOrigin(0, 0).setDepth(7); //Live Hearts on top of the Dead ones to similar what is currently there
+        this.heartLive2 = new LiveHeart(this, BORDER_WIDTH + 70, 10, "heartLive").setOrigin(0, 0).setDepth(7);
+        this.heartLive3 = new LiveHeart(this, BORDER_WIDTH + 130, 10, "heartLive").setOrigin(0, 0).setDepth(7);
     
         //Adding Physics
         this.physics.add.collider(this.blueOrbGroup, this.p1Drone, (blue) => {
             blue.absorb();
         });
+        this.physics.add.collider(this.greenOrbGroup, this.p1Drone, (green) => {
+            green.absorb();
+        });
+        this.physics.add.collider(this.laserGroup, this.redOrbGroup, (laserbolt, red) => {
+            // console.log(laserbolt);
+            // console.log(red);
+            laserbolt.hit();
+            red.hit();
+        });
     }
 
     update() {
-        //Moving background
-        this.grid.tilePositionY -= 2;
-
-        //Enabling movement of Drone whilst in play
+        //Enabling movementwhilst in play
         if(!this.gameOver){
+            this.grid.tilePositionY -= 2; //Moving background
             this.p1Drone.update();
-            this.laserGroup.update(this.p1Drone.x, this.p1Drone.y);
+            //this.laserGroup.update(this.p1Drone.x, this.p1Drone.y);
             this.ammoText.text = "x " + bulletCount;
+            this.scoreText.text = playerScore;
+            
+            //Manipulating Health Bar
+            if(playerLife < 3){
+                this.heartLive3.setAlpha(0);
+            } else{
+                this.heartLive3.setAlpha(1);
+            }
+            if(playerLife < 2){
+                this.heartLive2.setAlpha(0);
+            } else{
+                this.heartLive2.setAlpha(1);
+            }
+            if(playerLife == 0){
+                this.heartLive1.setAlpha(0);
+                this.gameOver = true;
+            } else{
+                this.heartLive1.setAlpha(1);
+            }
+
+            //Allowing firing
+            if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+                if(bulletCount <= 0){
+                    this.  sound.play("emptySound");
+                } else{
+                    this.fireLaser();
+                    bulletCount -= 1;
+                }
+            }
         }
+    }
+
+    fireLaser(){
+        let laserbolt = new Laser(this, this.p1Drone.x, this.p1Drone.y);
+        this.laserGroup.add(laserbolt);
     }
 
     addRedOrb(){

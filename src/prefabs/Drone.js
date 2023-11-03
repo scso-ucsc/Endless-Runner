@@ -5,6 +5,9 @@ class Drone extends Phaser.Physics.Arcade.Sprite{
         this.parentScene = scene; //To maintain scene context
         this.parentScene.add.existing(this); //Adding item to scene
         this.parentScene.physics.add.existing(this); //Adding physics to item in scene
+
+        this.setCollideWorldBounds(true);
+        this.setImmovable(true);
         this.moveSpeed = 5;
     }
 

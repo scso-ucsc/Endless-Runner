@@ -34,8 +34,4 @@ class LaserGroup extends Phaser.Physics.Arcade.Group{
             this.scene.sound.play("laserSound" + randomVal);
         }
     }
-
-    // impact(){
-    //     this.laserImpact();
-    // }
 }

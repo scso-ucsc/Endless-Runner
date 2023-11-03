@@ -11,13 +11,13 @@ class BlueOrb extends Phaser.Physics.Arcade.Sprite{
 
         this.play("blueOrbIdle");
         this.setVelocityY(300);
-        this.setImmovable(true);
+        //this.setImmovable(true);
 
         this.newBlueOrb = true;
     }
 
     update(){
-        if(this.newBlueOrb == true && this.y > game.config.height / 4 * 3){ //Spawn a new blue orb every time one reaches 3/4 of the map
+        if(this.newBlueOrb == true && this.y > game.config.height + blueGreenOrbRadius){ //Spawn a new blue orb every time one reaches end of the map
             var randomTime = Phaser.Math.Between(1, 5);
             this.parentScene.time.delayedCall(randomTime * 1000, () => { //Spawn a new blue orb after a random amount of seconds
                 this.parentScene.addBlueOrb(this.parent);
@@ -36,6 +36,6 @@ class BlueOrb extends Phaser.Physics.Arcade.Sprite{
         this.parentScene.time.delayedCall(3000, () => {
             this.parentScene.addBlueOrb(this.parent);
         })
-        console.log("blue orb absorbed!");
+        this.newBlueOrb = false;
     }
 }

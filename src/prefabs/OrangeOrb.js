@@ -11,7 +11,7 @@ class OrangeOrb extends Phaser.Physics.Arcade.Sprite{
 
         this.play("orangeOrbIdle");
         this.setVelocityY(velocity);
-        this.setImmovable(true);
+        //this.setImmovable(true);
         this.lives = 2;
 
         this.newOrangeOrb = true;
