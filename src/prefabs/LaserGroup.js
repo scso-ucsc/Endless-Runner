@@ -15,9 +15,14 @@ class LaserGroup extends Phaser.Physics.Arcade.Group{
     }
 
     update(droneX, droneY){
-        if(Phaser.Input.Keyboard.JustDown(keySPACE) && bulletCount > 0){
-            this.fire(droneX, droneY - 60);
-            bulletCount -= 1;
+
+        if(Phaser.Input.Keyboard.JustDown(keySPACE)){
+            if(bulletCount == 0){
+                this.scene.sound.play("emptySound");
+            } else{
+                this.fire(droneX, droneY - 60);
+                bulletCount -= 1;
+            }
         }
     }
 
@@ -25,6 +30,8 @@ class LaserGroup extends Phaser.Physics.Arcade.Group{
         const laserbolt = this.getFirstDead(false) //Acquires first member of the group that is inactive; False prevents the creation of new ones if no more are available
         if(laserbolt){
             laserbolt.firing(x, y);
+            var randomVal = Phaser.Math.Between(1, 3); //Selecting random number between 1 and 3 inclusive
+            this.scene.sound.play("laserSound" + randomVal);
         }
     }
 }

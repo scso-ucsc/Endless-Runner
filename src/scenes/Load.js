@@ -22,6 +22,12 @@ class Load extends Phaser.Scene {
         this.load.image("heartDead", "./assets/heart_dead.png");
         this.load.image("laser", "./assets/laser.png");
 
+        //Loading SFX
+        this.load.audio("emptySound", "./assets/laserEmpty.wav");
+        this.load.audio("laserSound1", "./assets/laserShoot1.wav");
+        this.load.audio("laserSound2", "./assets/laserShoot2.wav");
+        this.load.audio("laserSound3", "./assets/laserShoot3.wav");
+
         //Loading spritesheets
         this.load.spritesheet("drone", "./assets/drone.png", {
             frameWidth: 100,

@@ -43,6 +43,12 @@ class Play extends Phaser.Scene {
         this.scoreText = this.add.text(game.config.width / 2, 28, playerScore, scoreTextConfig).setOrigin(0.5);
         scoreTextConfig.fontSize = "14px";
         this.highScoreText = this.add.text(game.config.width / 2, 60, "Best: " + highScore, scoreTextConfig).setOrigin(0.5);
+        scoreTextConfig.fontSize = "60px";
+        scoreTextConfig.color = "#006633";
+        scoreTextConfig.align = "right";
+        this.ammoText = this.add.text(game.config.width - BORDER_WIDTH - 65, 40, "x " + bulletCount, scoreTextConfig).setOrigin(0.5);
+
+        this.ammoIcon = this.add.sprite(game.config.width - BORDER_WIDTH - 140, 40, "laser").setOrigin(0.5); //Laser Icon
 
         this.heartDead1 = this.add.sprite(BORDER_WIDTH + 10, 10, "heartDead").setOrigin(0, 0); //Dead Hearts
         this.heartDead2 = this.add.sprite(BORDER_WIDTH + 70, 10, "heartDead").setOrigin(0, 0);
@@ -61,6 +67,7 @@ class Play extends Phaser.Scene {
         if(!this.gameOver){
             this.p1Drone.update();
             this.laserGroup.update(this.p1Drone.x, this.p1Drone.y);
+            this.ammoText.text = "x " + bulletCount;
         }
     }
 }
