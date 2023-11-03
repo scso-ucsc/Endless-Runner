@@ -29,6 +29,7 @@ let playerLife = 3;
 let bulletCount = 10;
 let redOrbRadius = 50;
 let orangeOrbRadius = 100;
+let blueGreenOrbRadius = 25;
 
 //Enabling keyboard variables
 let keyLEFT, keyRIGHT, keyUP, keyDOWN, keySPACE;

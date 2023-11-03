@@ -41,6 +41,14 @@ class Load extends Phaser.Scene {
             frameWidth: 200,
             frameHeight: 200
         });
+        this.load.spritesheet("greenOrb", "./assets/green_orb.png", {
+            frameWidth: 50,
+            frameHeight: 50
+        })
+        this.load.spritesheet("blueOrb", "./assets/blue_orb.png", {
+            frameWidth: 50,
+            frameHeight: 50
+        })
     }
 
     create() {

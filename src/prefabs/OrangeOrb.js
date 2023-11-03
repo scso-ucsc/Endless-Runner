@@ -7,7 +7,7 @@ class OrangeOrb extends Phaser.Physics.Arcade.Sprite{
 
         this.parentScene.add.existing(this);
         this.parentScene.physics.add.existing(this);
-        this.body.setCircle();
+        this.body.setCircle(this.width / 2);
 
         this.play("orangeOrbIdle");
         this.setVelocityY(velocity);

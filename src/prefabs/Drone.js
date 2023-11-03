@@ -9,6 +9,7 @@ class Drone extends Phaser.Physics.Arcade.Sprite{
     }
 
     update(){
+        //Movement code is based off of Exercise-01 from CMPM 120: https://github.com/scso-ucsc/Exercise-01-Template-master/tree/master
         let droneVector = new Phaser.Math.Vector2(0, 0);
         //Left-Right Movement
         if(keyLEFT.isDown && this.x >= BORDER_WIDTH + this.width / 2 + 10){
