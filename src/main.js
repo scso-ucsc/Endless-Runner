@@ -1,6 +1,6 @@
 //Name: Sean Eric So
 //Game Title: Endless Runner
-//Time it took to complete project: 5 hours
+//Time it took to complete project: 8 hours
 //Creative Tilt:
 
 let config = {
@@ -27,6 +27,7 @@ let playerScore = 0;
 let highScore = 0;
 let playerLife = 3;
 let bulletCount = 10;
+let redOrbRadius = 100;
 
 //Enabling keyboard variables
 let keyLEFT, keyRIGHT, keySPACE;

@@ -33,6 +33,10 @@ class Load extends Phaser.Scene {
             frameWidth: 100,
             frameHeight: 80
         });
+        this.load.spritesheet("redOrb", "./assets/red_orb.png", {
+            frameWidth: 200,
+            frameHeight: 200
+        });
     }
 
     create() {

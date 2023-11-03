@@ -1,8 +1,10 @@
 //Drone prefab
-class Drone extends Phaser.GameObjects.Sprite{
+class Drone extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame);
-        scene.add.existing(this);
+        this.parentScene = scene; //To maintain scene context
+        this.parentScene.add.existing(this); //Adding item to scene
+        this.parentScene.physics.add.existing(this); //Adding physics to item in scene
         this.moveSpeed = 5;
     }
 

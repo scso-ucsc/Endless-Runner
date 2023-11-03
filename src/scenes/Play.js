@@ -20,13 +20,25 @@ class Play extends Phaser.Scene {
             repeat: -1, //Enabling looping
             frameRate: 10
         })
+        this.anims.create({
+            key: "redOrbIdle",
+            frames: this.anims.generateFrameNames("redOrb", {start: 0, end: 7}),
+            repeat: -1,
+            frameRate: 24
+        })
 
         //Adding drone
         this.p1Drone = new Drone(this, game.config.width / 2, game.config.height - 50, "drone", 0).setOrigin(0.5);
         this.p1Drone.play("droneFly");
 
-        //Adding laser group
-        this.laserGroup = new LaserGroup(this);
+        //Adding Groups
+        this.laserGroup = new LaserGroup(this); //Laser Group
+        this.redOrbGroup = this.add.group({
+            runChildUpdate: true //Enables running on children objects
+        });
+        this.time.delayedCall(2500, () => { //Spawning first red orb after 2.5 seconds
+            this.addRedOrb();
+        })
 
         //Defining Keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
@@ -69,5 +81,10 @@ class Play extends Phaser.Scene {
             this.laserGroup.update(this.p1Drone.x, this.p1Drone.y);
             this.ammoText.text = "x " + bulletCount;
         }
+    }
+
+    addRedOrb(){
+        let redOrb = new RedOrb(this, 350, 100).setScale(0.5);
+        this.redOrbGroup.add(redOrb);
     }
 }
