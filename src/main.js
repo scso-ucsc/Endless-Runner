@@ -1,6 +1,6 @@
 //Name: Sean Eric So
 //Game Title: Endless Runner
-//Time it took to complete project: 8.5 hours
+//Time it took to complete project: 9.5 hours
 //Creative Tilt: A shooting mechanic with different types of obstacles
 
 let config = {

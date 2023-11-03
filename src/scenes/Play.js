@@ -53,7 +53,7 @@ class Play extends Phaser.Scene {
         this.laserGroup = new LaserGroup(this); //Laser Group
         this.redOrbGroup = this.add.group({
             runChildUpdate: true //Enables running on children objects
-        });
+        }).setDepth(1);
         this.blueOrbGroup = this.add.group({
             runChildUpdate: true
         });
@@ -98,7 +98,7 @@ class Play extends Phaser.Scene {
             color: "#000000",
             align: "middle"
         };
-        this.scoreText = this.add.text(game.config.width / 2, 28, playerScore, scoreTextConfig).setOrigin(0.5);
+        this.scoreText = this.add.text(game.config.width / 2, 28, playerScore, scoreTextConfig).setOrigin(0.5).setDepth(5);
         scoreTextConfig.fontSize = "14px";
         this.highScoreText = this.add.text(game.config.width / 2, 60, "Best: " + highScore, scoreTextConfig).setOrigin(0.5);
         scoreTextConfig.fontSize = "60px";
@@ -115,6 +115,11 @@ class Play extends Phaser.Scene {
         this.heartLive1 = new LiveHeart(this, BORDER_WIDTH + 10, 10, "heartLive").setOrigin(0, 0); //Live Hearts on top of the Dead ones to similar what is currently there
         this.heartLive2 = new LiveHeart(this, BORDER_WIDTH + 70, 10, "heartLive").setOrigin(0, 0);
         this.heartLive3 = new LiveHeart(this, BORDER_WIDTH + 130, 10, "heartLive").setOrigin(0, 0);
+    
+        //Adding Physics
+        this.physics.add.collider(this.blueOrbGroup, this.p1Drone, (blue) => {
+            blue.absorb();
+        });
     }
 
     update() {

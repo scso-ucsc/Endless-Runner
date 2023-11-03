@@ -19,4 +19,9 @@ class Laser extends Phaser.Physics.Arcade.Sprite{
             this.setVisible(false);
         }
     }
+
+    // laserImpact(){
+    //     this.setActive(false);
+    //     this.setVisible(false);
+    // }
 }

@@ -4,6 +4,7 @@ class RedOrb extends Phaser.Physics.Arcade.Sprite{
         super(scene, Phaser.Math.Between(BORDER_WIDTH + redOrbRadius, game.config.width - BORDER_WIDTH - redOrbRadius), 0 - redOrbRadius, "redOrb");
 
         this.parentScene = scene; //To maintain scene context
+        this.points = pointValue;
 
         this.parentScene.add.existing(this); //Adding item to scene
         this.parentScene.physics.add.existing(this); //Adding physics to item in scene
@@ -25,5 +26,13 @@ class RedOrb extends Phaser.Physics.Arcade.Sprite{
         if(this.y > game.config.height + redOrbRadius){
             this.destroy();
         }
+    }
+
+    hit(){
+        playerScore += this.points;
+        this.parentScene.time.delayedCall(1000, () => { //Respawn another red orb after a second
+            this.parentScene.addRedOrb(this.parent, this.velocity);
+        });
+        this.newRedOrb = false;
     }
 }

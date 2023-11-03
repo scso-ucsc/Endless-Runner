@@ -29,4 +29,13 @@ class BlueOrb extends Phaser.Physics.Arcade.Sprite{
             this.destroy();
         }
     }
+
+    absorb(){
+        this.destroy();
+        bulletCount += 3;
+        this.parentScene.time.delayedCall(3000, () => {
+            this.parentScene.addBlueOrb(this.parent);
+        })
+        console.log("blue orb absorbed!");
+    }
 }
