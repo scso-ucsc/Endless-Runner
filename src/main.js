@@ -26,6 +26,7 @@ let BORDER_HEIGHT = 50;
 let playerScore = 0;
 let highScore = 0;
 let playerLife = 3;
+let bulletCount = 10;
 
 //Enabling keyboard variables
-let keyLEFT, keyRIGHT;
+let keyLEFT, keyRIGHT, keySPACE;

@@ -21,6 +21,18 @@ class Play extends Phaser.Scene {
             frameRate: 10
         })
 
+        //Adding drone
+        this.p1Drone = new Drone(this, game.config.width / 2, game.config.height - 50, "drone", 0).setOrigin(0.5);
+        this.p1Drone.play("droneFly");
+
+        //Adding laser group
+        this.laserGroup = new LaserGroup(this);
+
+        //Defining Keys
+        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+
         //Adding UI Features
         let scoreTextConfig = {
             fontFamily: "Oswald",
@@ -39,14 +51,6 @@ class Play extends Phaser.Scene {
         this.heartLive1 = new LiveHeart(this, BORDER_WIDTH + 10, 10, "heartLive").setOrigin(0, 0); //Live Hearts on top of the Dead ones to similar what is currently there
         this.heartLive2 = new LiveHeart(this, BORDER_WIDTH + 70, 10, "heartLive").setOrigin(0, 0);
         this.heartLive3 = new LiveHeart(this, BORDER_WIDTH + 130, 10, "heartLive").setOrigin(0, 0);
-
-        //Adding drone
-        this.p1Drone = new Drone(this, game.config.width / 2, game.config.height - 50, "drone", 0).setOrigin(0.5);
-        this.p1Drone.play("droneFly");
-
-        //Defining Keys
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
 
     update() {
@@ -56,6 +60,7 @@ class Play extends Phaser.Scene {
         //Enabling movement of Drone whilst in play
         if(!this.gameOver){
             this.p1Drone.update();
+            this.laserGroup.update(this.p1Drone.x, this.p1Drone.y);
         }
     }
 }
