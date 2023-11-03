@@ -26,6 +26,12 @@ class Play extends Phaser.Scene {
             repeat: -1,
             frameRate: 24
         })
+        this.anims.create({
+            key: "orangeOrbIdle",
+            frames: this.anims.generateFrameNames("orangeOrb", {start: 0, end: 7}),
+            repeat: -1,
+            frameRate: 24
+        })
 
         //Adding drone
         this.p1Drone = new Drone(this, game.config.width / 2, game.config.height - 50, "drone", 0).setOrigin(0.5);
@@ -36,13 +42,23 @@ class Play extends Phaser.Scene {
         this.redOrbGroup = this.add.group({
             runChildUpdate: true //Enables running on children objects
         });
+        this.orangeOrbGroup = this.add.group({
+            runChildUpdate: true
+        });
+
+        //Spawning first obstacles
         this.time.delayedCall(2500, () => { //Spawning first red orb after 2.5 seconds
             this.addRedOrb();
+        })
+        this.time.delayedCall(10000, () => { //Spawning first orange orb after 10 seconds
+            this.addOrangeOrb();
         })
 
         //Defining Keys
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         //Adding UI Features
@@ -73,7 +89,7 @@ class Play extends Phaser.Scene {
 
     update() {
         //Moving background
-        this.grid.tilePositionY -= 3;
+        this.grid.tilePositionY -= 2;
 
         //Enabling movement of Drone whilst in play
         if(!this.gameOver){
@@ -84,7 +100,13 @@ class Play extends Phaser.Scene {
     }
 
     addRedOrb(){
-        let redOrb = new RedOrb(this, 350, 100).setScale(0.5);
+        var randomVel = Phaser.Math.Between(350, 450);
+        let redOrb = new RedOrb(this, randomVel, 100).setScale(0.5);
         this.redOrbGroup.add(redOrb);
+    }
+
+    addOrangeOrb(){
+        let orangeOrb = new OrangeOrb(this, 350, 200);
+        this.orangeOrbGroup.add(orangeOrb);
     }
 }

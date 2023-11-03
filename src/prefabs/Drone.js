@@ -9,11 +9,23 @@ class Drone extends Phaser.Physics.Arcade.Sprite{
     }
 
     update(){
+        let droneVector = new Phaser.Math.Vector2(0, 0);
         //Left-Right Movement
         if(keyLEFT.isDown && this.x >= BORDER_WIDTH + this.width / 2 + 10){
-            this.x -= this.moveSpeed;
+            droneVector.x = -1;
         } else if(keyRIGHT.isDown && this.x <= game.config.width - BORDER_WIDTH - this.width / 2 - 10){
-            this.x += this.moveSpeed;
+            droneVector.x = 1;
         }
+        //Up-Down Movement
+        if(keyDOWN.isDown && this.y <= game.config.height - this.height / 2 - 10){
+            droneVector.y = 1;
+        } else if(keyUP.isDown && this.y >= BORDER_HEIGHT + this.height / 2 + 30){
+            droneVector.y = -1;
+        }
+
+        droneVector.normalize();
+
+        this.x += droneVector.x * this.moveSpeed;
+        this.y += droneVector.y * this.moveSpeed;
     }
 }

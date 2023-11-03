@@ -1,3 +1,4 @@
+//Red Orb prefab
 class RedOrb extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, velocity, pointValue){
         super(scene, Phaser.Math.Between(BORDER_WIDTH + redOrbRadius, game.config.width - BORDER_WIDTH - redOrbRadius), 0 - redOrbRadius, "redOrb");
