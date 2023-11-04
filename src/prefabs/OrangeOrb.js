@@ -36,6 +36,8 @@ class OrangeOrb extends Phaser.Physics.Arcade.Sprite{
             playerScore += this.points;
             this.reset();
         }
+        var randomVal = Phaser.Math.Between(1, 3);
+        this.parentScene.sound.play("orbDamage" + randomVal);
     }
 
     impact(){

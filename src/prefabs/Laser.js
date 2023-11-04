@@ -43,7 +43,6 @@ class Laser extends Phaser.Physics.Arcade.Sprite{
 
     update(){
         if(this.y < 0 - this.height){
-            console.log("Laser Destroyed")
             this.destroy();
         }
     }

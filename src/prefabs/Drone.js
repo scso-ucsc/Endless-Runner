@@ -36,5 +36,10 @@ class Drone extends Phaser.Physics.Arcade.Sprite{
     hit(loseVal){
         playerLife -= loseVal;
         this.parentScene.cameras.main.flash(1000, 252, 166, 164, false);
+        if(playerLife <= 0){
+            this.parentScene.sound.play("explosion");
+        } else{
+            this.parentScene.sound.play("droneDamage");
+        }
     }
 }

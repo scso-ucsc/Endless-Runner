@@ -31,6 +31,8 @@ class RedOrb extends Phaser.Physics.Arcade.Sprite{
     hit(){
         this.destroy()
         playerScore += this.points;
+        var randomVal = Phaser.Math.Between(1, 3);
+        this.parentScene.sound.play("orbDamage" + randomVal);
         this.reset();
     }
 

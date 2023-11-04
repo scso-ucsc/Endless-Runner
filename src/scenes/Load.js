@@ -27,6 +27,13 @@ class Load extends Phaser.Scene {
         this.load.audio("laserSound1", "./assets/laserShoot1.wav");
         this.load.audio("laserSound2", "./assets/laserShoot2.wav");
         this.load.audio("laserSound3", "./assets/laserShoot3.wav");
+        this.load.audio("droneDamage", "./assets/damage.wav");
+        this.load.audio("orbDamage1", "./assets/impact1.wav");
+        this.load.audio("orbDamage2", "./assets/impact2.wav");
+        this.load.audio("orbDamage3", "./assets/impact3.wav");
+        this.load.audio("explosion", "./assets/explosion.wav");
+        this.load.audio("heal", "./assets/heal.wav");
+        this.load.audio("charge", "./assets/charge.wav");
 
         //Loading spritesheets
         this.load.spritesheet("drone", "./assets/drone.png", {

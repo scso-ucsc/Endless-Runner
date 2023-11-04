@@ -32,7 +32,8 @@ class BlueOrb extends Phaser.Physics.Arcade.Sprite{
 
     absorb(){
         this.destroy();
-        bulletCount += 3;
+        bulletCount += 5;
+        this.parentScene.sound.play("charge");
         this.parentScene.time.delayedCall(3000, () => {
             this.parentScene.addBlueOrb(this.parent);
         })

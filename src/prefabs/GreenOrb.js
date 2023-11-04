@@ -33,6 +33,7 @@ class GreenOrb extends Phaser.Physics.Arcade.Sprite{
     absorb(){
         this.destroy();
         playerLife = 3;
+        this.parentScene.sound.play("heal");
         this.parentScene.cameras.main.flash(1000, 164, 252, 176, false);
         var randomTime = Phaser.Math.Between(15, 20);
         this.parentScene.time.delayedCall(randomTime * 1000, () => { //Spawn a new green orb after a random amount of seconds
