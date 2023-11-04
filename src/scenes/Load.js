@@ -34,6 +34,7 @@ class Load extends Phaser.Scene {
         this.load.audio("explosion", "./assets/explosion.wav");
         this.load.audio("heal", "./assets/heal.wav");
         this.load.audio("charge", "./assets/charge.wav");
+        this.load.audio("block", "./assets/block.wav");
 
         //Loading spritesheets
         this.load.spritesheet("drone", "./assets/drone.png", {
@@ -51,11 +52,15 @@ class Load extends Phaser.Scene {
         this.load.spritesheet("greenOrb", "./assets/green_orb.png", {
             frameWidth: 50,
             frameHeight: 50
-        })
+        });
         this.load.spritesheet("blueOrb", "./assets/blue_orb.png", {
             frameWidth: 50,
             frameHeight: 50
-        })
+        });
+        this.load.spritesheet("yellowWall", "./assets/yellowWall.png", {
+            frameWidth: 200,
+            frameHeight: 25
+        });
     }
 
     create() {

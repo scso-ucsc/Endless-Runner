@@ -19,31 +19,37 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNames("drone", {start: 0, end: 3}),
             repeat: -1, //Enabling looping
             frameRate: 10
-        })
+        });
         this.anims.create({
             key: "redOrbIdle",
             frames: this.anims.generateFrameNames("redOrb", {start: 0, end: 7}),
             repeat: -1,
             frameRate: 24
-        })
+        });
         this.anims.create({
             key: "orangeOrbIdle",
             frames: this.anims.generateFrameNames("orangeOrb", {start: 0, end: 7}),
             repeat: -1,
             frameRate: 24
-        })
+        });
         this.anims.create({
             key: "blueOrbIdle",
             frames: this.anims.generateFrameNames("blueOrb", {start: 0, end: 7}),
             repeat: -1,
             frameRate: 10
-        })
+        });
         this.anims.create({
             key: "greenOrbIdle",
             frames: this.anims.generateFrameNames("greenOrb", {start: 0, end: 6}),
             repeat: -1,
             frameRate: 10
-        })
+        });
+        this.anims.create({
+            key: "yellowWallIdle",
+            frames: this.anims.generateFrameNames("yellowWall", {start: 0, end: 3}),
+            repeat: -1,
+            frameRate: 8
+        });
 
         //Adding drone
         this.p1Drone = new Drone(this, game.config.width / 2, game.config.height - 50, "drone", 0).setOrigin(0.5);
@@ -65,6 +71,9 @@ class Play extends Phaser.Scene {
         this.greenOrbGroup = this.add.group({
             runChildUpdate: true
         }).setDepth(4);
+        this.yellowWallGroup = this.add.group({
+            runChildUpdate: true
+        });
 
         //Spawning first obstacles
         this.time.delayedCall(2500, () => { //Spawning first red orb after 2.5 seconds
@@ -76,8 +85,11 @@ class Play extends Phaser.Scene {
         this.time.delayedCall(10000, () => { //Spawning first orange orb after 10 seconds
             this.addOrangeOrb();
         });
-        this.time.delayedCall(15000, () => { //Spawning first green orb after 10 seconds
+        this.time.delayedCall(15000, () => { //Spawning first green orb after 15 seconds
             this.addGreenOrb();
+        });
+        this.time.delayedCall(20000, () => { //Spawning first yellow wall after 20 seconds
+            this.addYellowWall();
         });
         this.time.delayedCall(30000, () => { //Spawning another red orb after 30 seconds
             this.addRedOrb();
@@ -136,11 +148,19 @@ class Play extends Phaser.Scene {
         this.physics.add.collider(this.p1Drone, this.redOrbGroup, (drone, red) => { //Drone collides with red orb
             drone.hit(1);
             red.impact();
-        })
+        });
         this.physics.add.collider(this.p1Drone, this.orangeOrbGroup, (drone, orange) => { //Drone collides with orange orb
             drone.hit(2);
             orange.impact();
-        })
+        });
+        this.physics.add.collider(this.p1Drone, this.yellowWallGroup, (drone, yellow) => { //Drone collides with yellow wall
+            drone.hit(1);
+            yellow.impact();
+        });
+        this.physics.add.collider(this.laserGroup, this.yellowWallGroup, (laserbolt) => { //Laser collide with yellow wall
+            laserbolt.destroy();
+            this.sound.play("block");
+        });
     }
 
     update() {
@@ -213,5 +233,10 @@ class Play extends Phaser.Scene {
     addGreenOrb(){
         let greenOrb = new GreenOrb(this);
         this.greenOrbGroup.add(greenOrb);
+    }
+
+    addYellowWall(){
+        let yellowWall = new YellowWall(this);
+        this.yellowWallGroup.add(yellowWall);
     }
 }
