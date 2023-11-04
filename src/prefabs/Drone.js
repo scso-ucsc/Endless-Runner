@@ -32,4 +32,9 @@ class Drone extends Phaser.Physics.Arcade.Sprite{
         this.x += droneVector.x * this.moveSpeed;
         this.y += droneVector.y * this.moveSpeed;
     }
+
+    hit(loseVal){
+        playerLife -= loseVal;
+        this.parentScene.cameras.main.flash(1000, 252, 166, 164, false);
+    }
 }

@@ -30,8 +30,16 @@ class RedOrb extends Phaser.Physics.Arcade.Sprite{
 
     hit(){
         this.destroy()
-        console.log(this.points);
         playerScore += this.points;
+        this.reset();
+    }
+
+    impact(){
+        this.destroy();
+        this.reset();
+    }
+
+    reset(){
         this.parentScene.time.delayedCall(1000, () => { //Respawn another red orb after a second
             this.parentScene.addRedOrb(this.parent, this.velocity);
         });

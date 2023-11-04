@@ -119,18 +119,28 @@ class Play extends Phaser.Scene {
         this.heartLive3 = new LiveHeart(this, BORDER_WIDTH + 130, 10, "heartLive").setOrigin(0, 0).setDepth(7);
     
         //Adding Physics
-        this.physics.add.collider(this.blueOrbGroup, this.p1Drone, (blue) => {
+        this.physics.add.collider(this.blueOrbGroup, this.p1Drone, (blue) => { //Drone collide with blue orb
             blue.absorb();
         });
-        this.physics.add.collider(this.greenOrbGroup, this.p1Drone, (green) => {
+        this.physics.add.collider(this.greenOrbGroup, this.p1Drone, (green) => { //Drone collide with green orb
             green.absorb();
         });
-        this.physics.add.collider(this.laserGroup, this.redOrbGroup, (laserbolt, red) => {
-            // console.log(laserbolt);
-            // console.log(red);
+        this.physics.add.collider(this.laserGroup, this.redOrbGroup, (laserbolt, red) => { //Laser collide with red orb
             laserbolt.hit();
             red.hit();
         });
+        this.physics.add.collider(this.laserGroup, this.orangeOrbGroup, (laserbolt, orange) => { //Laser collide with orange orb
+            laserbolt.hit();
+            orange.hit();
+        });
+        this.physics.add.collider(this.p1Drone, this.redOrbGroup, (drone, red) => { //Drone collides with red orb
+            drone.hit(1);
+            red.impact();
+        })
+        this.physics.add.collider(this.p1Drone, this.orangeOrbGroup, (drone, orange) => { //Drone collides with orange orb
+            drone.hit(2);
+            orange.impact();
+        })
     }
 
     update() {
@@ -153,8 +163,9 @@ class Play extends Phaser.Scene {
             } else{
                 this.heartLive2.setAlpha(1);
             }
-            if(playerLife == 0){
+            if(playerLife <= 0){
                 this.heartLive1.setAlpha(0);
+                this.p1Drone.destroy();
                 this.gameOver = true;
             } else{
                 this.heartLive1.setAlpha(1);
@@ -168,6 +179,12 @@ class Play extends Phaser.Scene {
                     this.fireLaser();
                     bulletCount -= 1;
                 }
+            }
+        } else{ //If game is over
+            if(playerScore > highScore){
+                highScore = playerScore;
+                this.highScoreText.style.color = "#FF0000";
+                this.highScoreText.text = "Best: " + highScore;
             }
         }
     }
