@@ -4,6 +4,12 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //Initialising Variables
+        playerLife = 3;
+        bulletCount = 10;
+        playerScore = 0;
+        yellowWallPoints = 100;
+        
         //Game Over Flag
         this.gameOver = false;
 
@@ -119,8 +125,14 @@ class Play extends Phaser.Scene {
         this.time.delayedCall(30000, () => { //Spawning another red orb after 30 seconds
             this.addRedOrb();
         });
-        this.time.delayedCall(60000, () => { //Spawning another red orb after 60 seconds
+        this.time.delayedCall(60000, () => { //Spawning another red orb and another blue orb after 60 seconds
             this.addRedOrb();
+            this.addBlueOrb();
+        });
+        this.time.delayedCall(90000, () => { //Spawning another red, orange orb and yellow wall after 90 seconds
+            this.addRedOrb();
+            this.addOrangeOrb();
+            this.addYellowWall();
         });
 
         //Defining Keys
@@ -130,6 +142,7 @@ class Play extends Phaser.Scene {
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        keyESC = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
         //Adding UI Features
         let scoreTextConfig = {
@@ -155,6 +168,22 @@ class Play extends Phaser.Scene {
         this.heartLive1 = new LiveHeart(this, BORDER_WIDTH + 10, 10, "heartLive").setOrigin(0, 0).setDepth(7); //Live Hearts on top of the Dead ones to similar what is currently there
         this.heartLive2 = new LiveHeart(this, BORDER_WIDTH + 70, 10, "heartLive").setOrigin(0, 0).setDepth(7);
         this.heartLive3 = new LiveHeart(this, BORDER_WIDTH + 130, 10, "heartLive").setOrigin(0, 0).setDepth(7);
+
+        let gameOverTextConfig = {
+            fontFamily: "Oswald",
+            fontSize: "100px",
+            color: "#A52320",
+            backgroundColor: "#85939E",
+            align: "middle",
+            padding: {
+                left: 25,
+                right: 25
+            }
+        };
+        this.gameOverText = this.add.text(game.config.width / 2, game.config.height / 2 - 100, "GAME OVER", gameOverTextConfig).setOrigin(0.5).setDepth(7).setAlpha(0);
+        gameOverTextConfig.fontSize = "50px";
+        this.gameDescText1 = this.add.text(game.config.width / 2, game.config.height / 2 + 25, "PRESS (R) TO RESTART", gameOverTextConfig).setOrigin(0.5).setDepth(7).setAlpha(0);
+        this.gameDescText2 = this.add.text(game.config.width / 2, game.config.height / 2 + 100, "PRESS (ESC) TO RETURN TO MENU", gameOverTextConfig).setOrigin(0.5).setDepth(7).setAlpha(0);
     
         //Adding Physics
         this.physics.add.collider(this.blueOrbGroup, this.p1Drone, (blue) => { //Drone collide with blue orb
@@ -232,17 +261,25 @@ class Play extends Phaser.Scene {
                 }
             }
         } else{ //If game is over
-            if(playerScore > highScore){
+
+            if(playerScore > highScore){ //Updating Highscore
                 highScore = playerScore;
                 this.highScoreText.style.color = "#FF0000";
                 this.highScoreText.text = "Best: " + highScore;
             }
 
+            yellowWallPoints = 0; //To prevent the aquisition of more points after game over
+            this.gameOverText.setAlpha(1);
+            this.gameDescText1.setAlpha(1);
+            this.gameDescText2.setAlpha(1);
+
             if(Phaser.Input.Keyboard.JustDown(keyR)){
                 this.scene.restart();
-                playerLife = 3;
-                bulletCount = 10;
                 this.sound.stopAll(); //End Music
+            }
+            if(Phaser.Input.Keyboard.JustDown(keyESC)){
+                this.scene.start("menuScene"); //Proceed to MENU
+                this.sound.stopAll();
             }
         }
     }

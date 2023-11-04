@@ -22,7 +22,7 @@ class YellowWall extends Phaser.Physics.Arcade.Sprite{
 
         if(this.y > game.config.height + 12.5){
             this.destroy();
-            playerScore += 100;
+            playerScore += yellowWallPoints;
         }
     }
 
