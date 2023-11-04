@@ -13,6 +13,13 @@ class Play extends Phaser.Scene {
         let barrierL = this.add.rectangle(0, 0, BORDER_WIDTH, game.config.height, 0x333333).setOrigin(0, 0).setDepth(6); //Side Walls
         let barrierR = this.add.rectangle(game.config.width - BORDER_WIDTH, 0, BORDER_WIDTH, game.config.height, 0x333333).setOrigin(0, 0).setDepth(6);
 
+        //Adding Music
+        let audioConfig = {
+            volume: 0.5,
+            loop: true //Allows looping of track
+        }
+        this.sound.play("playAudio", audioConfig);
+
         //Configuring Animations
         this.anims.create({
             key: "droneFly",
@@ -122,6 +129,7 @@ class Play extends Phaser.Scene {
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyR = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
 
         //Adding UI Features
         let scoreTextConfig = {
@@ -228,6 +236,13 @@ class Play extends Phaser.Scene {
                 highScore = playerScore;
                 this.highScoreText.style.color = "#FF0000";
                 this.highScoreText.text = "Best: " + highScore;
+            }
+
+            if(Phaser.Input.Keyboard.JustDown(keyR)){
+                this.scene.restart();
+                playerLife = 3;
+                bulletCount = 10;
+                this.sound.stopAll(); //End Music
             }
         }
     }

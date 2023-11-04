@@ -23,6 +23,7 @@ class Load extends Phaser.Scene {
         this.load.image("laser", "./assets/laser.png");
 
         //Loading SFX
+        this.load.audio("playAudio", "./assets/VideoDungeonBoss.wav"); //Music by Kevin Macleod: https://www.youtube.com/watch?v=geT22uolrcY
         this.load.audio("emptySound", "./assets/laserEmpty.wav");
         this.load.audio("laserSound1", "./assets/laserShoot1.wav");
         this.load.audio("laserSound2", "./assets/laserShoot2.wav");
