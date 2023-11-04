@@ -29,6 +29,11 @@ class OrangeOrb extends Phaser.Physics.Arcade.Sprite{
     }
 
     hit(){
+        let explosion = this.parentScene.add.sprite(this.x, this.y, "orangeParticles");
+        explosion.anims.play("orangeParticlesBurst");
+        explosion.on("animationcomplete", () => {
+            explosion.destroy();
+        });
         if(this.lives == 2){
             this.lives -= 1;
         } else{ //If this.lives == 1

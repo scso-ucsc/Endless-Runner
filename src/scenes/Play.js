@@ -48,7 +48,25 @@ class Play extends Phaser.Scene {
             key: "yellowWallIdle",
             frames: this.anims.generateFrameNames("yellowWall", {start: 0, end: 3}),
             repeat: -1,
-            frameRate: 8
+            frameRate: 24
+        });
+        this.anims.create({
+            key: "orangeParticlesBurst",
+            frames: this.anims.generateFrameNames("orangeParticles", {start: 0, end: 8}),
+            repeat: 0,
+            frameRate: 12
+        });
+        this.anims.create({
+            key: "redParticlesBurst",
+            frames: this.anims.generateFrameNames("redParticles", {start: 0, end: 8}),
+            repeat: 0,
+            frameRate: 12
+        });
+        this.anims.create({
+            key: "laserBurst",
+            frames: this.anims.generateFrameNames("laserBurst", {start: 0, end: 4}),
+            repeat: 0,
+            frameRate: 12
         });
 
         //Adding drone
@@ -158,6 +176,11 @@ class Play extends Phaser.Scene {
             yellow.impact();
         });
         this.physics.add.collider(this.laserGroup, this.yellowWallGroup, (laserbolt) => { //Laser collide with yellow wall
+            let laserPop = this.add.sprite(laserbolt.x, laserbolt.y, "laserBurst");
+            laserPop.anims.play("laserBurst");
+            laserPop.on("animationcomplete", () => {
+                laserPop.destroy();
+            });
             laserbolt.destroy();
             this.sound.play("block");
         });

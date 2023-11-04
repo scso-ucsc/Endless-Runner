@@ -61,6 +61,18 @@ class Load extends Phaser.Scene {
             frameWidth: 200,
             frameHeight: 25
         });
+        this.load.spritesheet("orangeParticles", "./assets/orange_particles.png", {
+            frameWidth: 200,
+            frameHeight: 200
+        });
+        this.load.spritesheet("redParticles", "./assets/red_particles.png", {
+            frameWidth: 200,
+            frameHeight: 200
+        });
+        this.load.spritesheet("laserBurst", "./assets/laserBurst.png", {
+            frameWidth: 50,
+            frameHeight: 50
+        });
     }
 
     create() {

@@ -29,6 +29,11 @@ class RedOrb extends Phaser.Physics.Arcade.Sprite{
     }
 
     hit(){
+        let explosion = this.parentScene.add.sprite(this.x, this.y, "redParticles").setScale(0.5);
+        explosion.anims.play("redParticlesBurst");
+        explosion.on("animationcomplete", () => {
+            explosion.destroy();
+        });
         this.destroy()
         playerScore += this.points;
         var randomVal = Phaser.Math.Between(1, 3);
