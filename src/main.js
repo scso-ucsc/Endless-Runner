@@ -6,6 +6,8 @@
 //               There are different types of obstacles that the player must face that are worth varying amount of points. 
 //               There are also power ups that the player must gather in order to continue playing the game. 
 //               If the player collides with too many obstacles, they lose life, and at 0 life the game ends.
+//               This game is visually techbased and makes use of animated sprites for each of the particles as well as unique animations for when certain sprites
+//               collide, such as how the laser sprites will disperse into smaller green particles if colliding with the yellow walls.
 
 let config = {
     type: Phaser.CANVAS,
