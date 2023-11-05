@@ -21,9 +21,10 @@ class Menu extends Phaser.Scene {
         };
         this.add.text(game.config.width / 2, game.config.height / 2 - 200, "INTO THE GRID", titleTextConfig).setOrigin(0.5);
         titleTextConfig.backgroundColor = false;
-        titleTextConfig.fontSize = "60px";
-        this.add.text(game.config.width / 2, game.config.height / 2 + 10, "Press (SPACE) To Start", titleTextConfig).setOrigin(0.5);
-        this.add.text(game.config.width / 2, game.config.height / 2 + 150, "Press ← For Instructions", titleTextConfig).setOrigin(0.5);
+        titleTextConfig.fontSize = "40px";
+        this.add.text(game.config.width / 2, game.config.height / 2 - 20, "Press (SPACE) To Start", titleTextConfig).setOrigin(0.5);
+        this.add.text(game.config.width / 2, game.config.height / 2 + 80, "Press ← For Instructions", titleTextConfig).setOrigin(0.5);
+        this.add.text(game.config.width / 2, game.config.height / 2 + 180, "Press → For Credits", titleTextConfig).setOrigin(0.5);
 
         //Adding Music
         let audioConfig = {
@@ -35,6 +36,7 @@ class Menu extends Phaser.Scene {
         //Defining Keys
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
 
     update() {
@@ -44,6 +46,10 @@ class Menu extends Phaser.Scene {
         }
         if(Phaser.Input.Keyboard.JustDown(keyLEFT)){
             this.scene.start("instructionScene");
+            this.sound.stopAll();
+        }
+        if(Phaser.Input.Keyboard.JustDown(keyRIGHT)){
+            this.scene.start("creditScene");
             this.sound.stopAll();
         }
     }
