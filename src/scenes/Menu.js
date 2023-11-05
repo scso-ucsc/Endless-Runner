@@ -25,8 +25,6 @@ class Menu extends Phaser.Scene {
         this.add.text(game.config.width / 2, game.config.height / 2 + 10, "Press (SPACE) To Start", titleTextConfig).setOrigin(0.5);
         this.add.text(game.config.width / 2, game.config.height / 2 + 150, "Press ← For Instructions", titleTextConfig).setOrigin(0.5);
 
-        //this.add.text(500, 325, "Endless Runner Menu").setOrigin(0.5);
-
         //Adding Music
         let audioConfig = {
             volume: 0.5,

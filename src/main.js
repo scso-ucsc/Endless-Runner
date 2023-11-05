@@ -1,7 +1,7 @@
 //Name: Sean Eric So
 //Game Title: Into the Grid
 //Genre: Endless Runner
-//Time it took to complete project: 15.5 hours
+//Time it took to complete project: 17.5 hours
 //Creative Tilt: This endless runner involves a shooting mechanic to earn points. 
 //               There are different types of obstacles that the player must face that are worth varying amount of points. 
 //               There are also power ups that the player must gather in order to continue playing the game. 
@@ -15,7 +15,7 @@ let config = {
     physics: {
         default: "arcade",
         arcade: {
-            debug: true
+            //debug: true
         }
     }
 };
